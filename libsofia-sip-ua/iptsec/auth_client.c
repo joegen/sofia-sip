@@ -961,7 +961,8 @@ int auc_digest_authorization(auth_client_t *ca,
   ar->ar_opaque = ac->ac_opaque;
   ar->ar_qop = NULL;
   ar->ar_auth = ac->ac_auth;
-  ar->ar_auth_int = ac->ac_auth_int;
+  /* Prefer qop=auth over qop=auth-int when the challenge offers both */
+  ar->ar_auth_int = ac->ac_auth_int && !ac->ac_auth;
   ar->ar_uri = uri = url_as_string(home, url);
 
   if (ar->ar_uri == NULL)
